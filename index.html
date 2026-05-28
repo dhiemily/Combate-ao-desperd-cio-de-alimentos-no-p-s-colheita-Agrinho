@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Combate ao Desperdício Pós-Colheita</title>
+    <style>
+        /* ==========================================================================
+           CSS - ESTILIZAÇÃO E LAYOUT (DESIGN LIMPO E RESPONSIVO)
+           ========================================================================== */
+        :root {
+            --cor-primaria: #2e7d32;
+            --cor-secundaria: #c62828;
+            --cor-fundo: #f4f6f7;
+            --cor-card: #ffffff;
+            --cor-texto: #333333;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+            background-color: var(--cor-fundo);
+            color: var(--cor-texto);
+        }
+
+        header {
+            background-color: var(--cor-primaria);
+            color: white;
+            text-align: center;
+            padding: 2rem 1rem;
+        }
+
+        main {
+            max-width: 800px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+        }
+
+        .card {
+            background: var(--cor-card);
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        h2 {
+            color: var(--cor-primaria);
+            border-bottom: 2px solid var(--cor-primaria);
+            padding-bottom: 0.5rem;
+        }
+
+        .formulario-grupo {
+            margin-bottom: 1.2rem;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: bold;
+        }
+
+        select, input {
+            width: 100%;
+            padding: 0.7rem;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+            font-size: 1rem;
+        }
+
+        button {
+            background-color: var(--cor-primaria);
+            color: white;
+            border: none;
+            padding: 0.8rem 1.5rem;
+            font-size: 1rem;
+            border-radius: 4px;
+            cursor: pointer;
+            width: 100%;
+            transition: background 0.3s;
+        }
+
+        button:hover {
+            background-color: #1b5e20;
+        }
+
+        .alerta-desperdicio {
+            background-color: #ffebee;
+            border-left: 5px solid var(--cor-secundaria);
+            padding: 1rem;
+            margin-top: 1rem;
+            display: none; /* Oculto inicialmente, exibido via JS */
+        }
+
+        .lista-solucoes {
+            padding-left: 1.2rem;
+        }
+
+        .lista-solucoes li {
+            margin-bottom: 0.5rem;
+        }
+
+        footer {
+            text-align: center;
+            padding: 2rem;
+            background: #333;
+            color: white;
+            margin-top: 4rem;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- CABEÇALHO DO SITE -->
+    <header>
+        <h1>Plataforma AgroConsciente</h1>
+        <p>Soluções inteligentes contra o desperdício de alimentos no pós-colheita</p>
+    </header>
+
+    <main>
+        <!-- SEÇÃO 1: DOCUMENTAÇÃO DO SISTEMA (Atores e Fluxos) -->
+        <section class="card">
+            <h2>1. Documentação do Sistema (Fluxos e Atores)</h2>
+            <p><strong>Objetivo do Projeto:</strong> Conscientizar produtores e distribuidores sobre perdas na pós-colheita, calculando o impacto financeiro e entregando soluções automáticas.</p>
+            
+            <h3>Atores do Sistema:</h3>
+            <ul>
+                <li><strong>Produtor/Usuário:</strong> Insere os dados da sua produção e estágio de perda para obter o diagnóstico.</li>
+                <li><strong>Sistema (AgroConsciente):</strong> Processa os dados, aplica regras lógicas, transmite mensagens de alerta e renderiza soluções apropriadas.</li>
+            </ul>
+
+            <h3>Fluxo de Eventos:</h3>
+            <ol>
+                <li>O <strong>Produtor</strong> seleciona a cultura, a produção total e a fase onde ocorre a perda.</li>
+                <li>O <strong>Produtor</strong> dispara o evento ao clicar em "Analisar Desperdício".</li>
+                <li>O <strong>Sistema</strong> valida as entradas usando operadores lógicos.</li>
+                <li>O <strong>Sistema</strong> calcula o prejuízo e executa um laço de repetição para filtrar as soluções adequadas.</li>
+                <li>O <strong>Sistema</strong> transmite o resultado na tela de forma clara e direta.</li>
+            </ol>
+        </section>
+
+        <!-- SEÇÃO 2: APLICAÇÃO INTERATIVA (Cálculo e Eventos) -->
+        <section class="card">
+            <h2>2. Simulador de Perda Pós-Colheita</h2>
+            
+            <div class="formulario-grupo">
+                <label for="tipoCultura">Tipo de Cultura:</label>
+                <select id="tipoCultura">
+                    <option value="Tomate">Tomate (Frágil - Perda Média 25%)</option>
+                    <option value="Milho">Milho (Grão - Perda Média 10%)</option>
+                    <option value="Batata">Batata (Tubérculo - Perda Média 15%)</option>
+                </select>
+            </div>
+
+            <div class="formulario-grupo">
+                <label for="quantidadeColhida">Quantidade Total Colhida (em KG):</label>
+                <input type="number" id="quantidadeColhida" placeholder="Ex: 10000" min="1">
+            </div>
+
+            <div class="formulario-grupo">
+                <label for="faseGargalo">Maior Gargalo de Perda:</label>
+                <select id="faseGargalo">
+                    <option value="transporte">Transporte (Estradas ruins / Embalagem inadequada)</option>
+                    <option value="armazenamento">Armazenamento (Falta de refrigeração / Silos inadequados)</option>
+                </select>
+            </div>
+
+            <!-- EVENTO GATILHO -->
+            <button id="botaoAnalisar">Analisar Desperdício e Buscar Soluções</button>
+
+            <!-- ZONA DE TRANSMISSÃO DE MENSAGENS -->
+            <div id="painelAlerta" class="alerta-desperdicio">
+                <h3 style="color: var(--cor-secundaria); margin-top: 0;">⚠️ Alerta de Impacto Detectado</h3>
+                <p id="mensagemResultado"></p>
+                
+                <h4>Ações Recomendadas para o seu Caso:</h4>
+                <ul id="listaRecomendacoes" class="lista-solucoes"></ul>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2026 AgroConsciente - Tecnologia a serviço do campo.</p>
+    </footer>
+
+    <!-- ==========================================================================
+       JAVASCRIPT - LOGICA, VARIÁVEIS, LAÇOS E REGRAS DE NEGÓCIO
+       ========================================================================== -->
+    <script>
+        // LISTA DE OBJETOS: Banco de dados de soluções reutilizado pelo laço de repetição
+        const bancoSolucoes = [
+            {
+                fase: "transporte",
+                descricao: "Utilizar caixas plásticas higienizáveis em vez de caixas de madeira para evitar ranhuras nos alimentos."
+            },
+            {
+                fase: "transporte",
+                descricao: "Planejar rotas otimizadas e horários mais frios do dia para o carregamento."
+            },
+            {
+                fase: "armazenamento",
+                descricao: "Implementar sistemas de controle de temperatura e umidade relativa no galpão."
+            },
+            {
+                fase: "armazenamento",
+                descricao: "Aplicar o método FIFO (Primeiro que Entra, Primeiro que Sai) na gestão do estoque."
+            }
+        ];
+
+        // MAPEAMENTO DE TAXAS DE PERDA (Dicionário para evitar estruturas condicionais repetitivas)
+        const taxasPerdaCultura = {
+            "Tomate": 0.25,
+            "Milho": 0.10,
+            "Batata": 0.15
+        };
+
+        // ESCUTA DE EVENTO: Alinhamento entre o clique do usuário e a ação do sistema
+        document.getElementById('botaoAnalisar').addEventListener('click', function() {
+            
+            // VARIÁVEIS COM NOMENCLATURA CLARA E SIGNIFICATIVA
+            const culturaSelecionada = document.getElementById('tipoCultura').value;
+            const quantidadeTotalKg = parseFloat(document.getElementById('quantidadeColhida').value);
+            const faseCritica = document.getElementById('faseGargalo').value;
+            
+            const painelAlerta = document.getElementById('painelAlerta');
+            const mensagemResultado = document.getElementById('mensagemResultado');
+            const listaRecomendacoes = document.getElementById('listaRecomendacoes');
+
+            // OPERADORES LÓGICOS: Validação de consistência dos dados inseridos
+            if (isNaN(quantidadeTotalKg) || quantidadeTotalKg <= 0) {
+                alert("Por favor, insira uma quantidade colhida válida e maior que zero.");
+                return; // Interrompe a execução se o dado for inválido
+            }
+
+            // PROCESSAMENTO: Cálculo da estimativa de perda baseado na cultura
+            const taxaDePerda = taxasPerdaCultura[culturaSelecionada];
+            const totalPerdidoKg = quantidadeTotalKg * taxaDePerda;
+
+            // TRANSMISSÃO DE MENSAGEM: Exibição do resultado de forma perceptível e imediata
+            mensagemResultado.innerHTML = `Estimamos que a cultura de <strong>${culturaSelecionada}</strong> sofra uma perda média de <strong>${taxaDePerda * 100}%</strong> no pós-colheita.<br>
+            Isso representa cerca de <strong>${totalPerdidoKg.toLocaleString('pt-BR')} KG</strong> de alimentos jogados fora antes de chegar ao consumidor.`;
+
+            // LIMPEZA PRÉVIA da lista de recomendações
+            listaRecomendacoes.innerHTML = "";
+
+            // LAÇO DE REPETIÇÃO: Varre a lista de soluções filtrando apenas o que é relevante para a fase crítica
