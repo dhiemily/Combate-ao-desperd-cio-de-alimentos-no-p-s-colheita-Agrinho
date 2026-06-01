@@ -186,7 +186,7 @@
         <p>&copy; 2026 AgroConsciente - Tecnologia a serviço do campo.</p>
     </footer>
 
-    <!-- ==========================================================================
+      <!-- ==========================================================================
        JAVASCRIPT - LOGICA, VARIÁVEIS, LAÇOS E REGRAS DE NEGÓCIO
        ========================================================================== -->
     <script>
@@ -220,4 +220,47 @@
         // ESCUTA DE EVENTO: Alinhamento entre o clique do usuário e a ação do sistema
         document.getElementById('botaoAnalisar').addEventListener('click', function() {
             
-            // VARIÁVEIS COM NOMENCLATURA CLARAs
+            // VARIÁVEIS COM NOMENCLATURA CLARA (Entradas do Usuário)
+            const tipoCultura = document.getElementById('tipoCultura').value;
+            const quantidadeColhidaInput = document.getElementById('quantidadeColhida').value;
+            const faseGargalo = document.getElementById('faseGargalo').value;
+
+            // Elementos de tela para exibição de resultados
+            const painelAlerta = document.getElementById('painelAlerta');
+            const mensagemResultado = document.getElementById('mensagemResultado');
+            const listaRecomendacoes = document.getElementById('listaRecomendacoes');
+
+            // Conversão numérica da entrada
+            const quantidadeColhida = parseFloat(quantidadeColhidaInput);
+
+            // OPERADORES LÓGICOS: Validação preventiva de dados vazios ou incorretos
+            if (isNaN(quantidadeColhida) || quantidadeColhida <= 0) {
+                alert("Por favor, insira uma quantidade válida e maior que zero.");
+                painelAlerta.style.display = "none";
+                return; // Interrompe a execução
+            }
+
+            // PROCESSAMENTO: Busca a taxa correspondente e calcula o total desperdiçado
+            const taxaPerda = taxasPerdaCultura[tipoCultura];
+            const totalDesperdiçado = quantidadeColhida * taxaPerda;
+
+            // TRANSMISSÃO DE MENSAGENS: Atualiza a tela com o diagnóstico financeiro/físico
+            mensagemResultado.innerHTML = `Estimamos que, de uma produção de <strong>${quantidadeColhida.toLocaleString('pt-BR')} kg</strong> de <strong>${tipoCultura}</strong>, aproximadamente <strong>${totalDesperdiçado.toLocaleString('pt-BR')} kg</strong> sejam perdidos devido às condições atuais da cadeia de abastecimento.`;
+
+            // Limpa as recomendações geradas em cliques anteriores
+            listaRecomendacoes.innerHTML = "";
+
+            // LAÇO DE REPETIÇÃO: Varre a coleção de objetos buscando apenas os dados da fase selecionada
+            bancoSolucoes.forEach(function(solucao) {
+                if (solucao.fase === faseGargalo) {
+                    // Manipulação da árvore DOM para inserir o item dinamicamente
+                    const itemLista = document.createElement('li');
+                    itemLista.textContent = solucao.descricao;
+                    listaRecomendacoes.appendChild(itemLista);
+                }
+            });
+
+            // Apresenta o painel de resultados alterando a propriedade do CSS
+            painelAlerta.style.display = "block";
+        });
+    </script>
